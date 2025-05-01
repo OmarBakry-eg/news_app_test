@@ -1,5 +1,4 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:news_app_test/src/core/dio/dio_client.dart';
@@ -60,16 +59,6 @@ Future<void> init() async {
    * ! Hive
    */
   await HiveService.initHive();
-
-  /**
-   * ! Secure Storage
-   */
-  const FlutterSecureStorage storage = FlutterSecureStorage(
-    aOptions: AndroidOptions(encryptedSharedPreferences: true),
-    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
-  );
-
-  sl.registerLazySingleton(() => storage);
 
   /**
    * ! ENV

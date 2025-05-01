@@ -7,3 +7,7 @@ void main() async {
   await di.init();
   runApp(const MyApp());
 }
+// 1- Webview
+// 2- Themeing (light & dark)
+// 3- Animation
+// 4- Network connectivity
