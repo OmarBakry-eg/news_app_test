@@ -24,7 +24,18 @@ class PopularNewsRepositoryImpl implements NewsRepository {
       PopularNewsModel newsModel = await newsRemoteDataSource.getPopularNews(
         pagination,
       );
-      newsLocalSource.addItem(newsModel.results);
+      if (pagination != PaginationType.one) {
+        List<dynamic>? results = await newsLocalSource.getItem();
+        if (results != null && results.isNotEmpty) {
+          List<PopularNewsResult> popRes = [];
+          for (var element in results) {
+            popRes.add(element);
+          }
+          newsLocalSource.addItem([...popRes, ...newsModel.results ?? []]);
+        }
+      } else {
+        newsLocalSource.addItem(newsModel.results);
+      }
       return Right(newsModel);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
